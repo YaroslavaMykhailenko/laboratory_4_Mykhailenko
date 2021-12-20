@@ -7,8 +7,7 @@ def AbsorptionMarkov():
 
     P_matrix = [[1, 0, 0, 0], [0.22, 0.11, 0.58, 0.09], [0.15, 0.27, 0.20, 0.38], [0.19, 0.57, 0.19, 0.05]]
     vector = [0.1, 0.3, 0.2, 0.4]
-
-        
+            
 
     def printMatrix ( matrix ): 
         for i in range ( len(matrix) ): 
@@ -22,7 +21,7 @@ def AbsorptionMarkov():
 
     # Model a Markov chain with absorption. Quantity implementations - more than 100
 
-    number_of_realization = 100
+    number_of_realization = 1000
     arr_realization = []
     n = 30
 
@@ -33,15 +32,17 @@ def AbsorptionMarkov():
         while i != 0:
             realization.append(i)
             vector = P_matrix[i]
+
             i = vector.index(np.random.choice(vector, 1, p = vector)[0])
         realization.append(i)
+        print(P_matrix[i])
 
         if len(realization) > 0:
             arr_realization.append(realization)
 
 
-    plt.figure(figsize=(10, 5))
-    for i in range(n):
+    plt.figure(figsize=(15, 5))
+    for i in range(30):
         plt.plot([ j for j in range(len(arr_realization[i])) ], arr_realization[i])
     plt.show()
 
@@ -55,7 +56,7 @@ def AbsorptionMarkov():
 
         for (i, j) in zip(realization, realization[1:]):
             matrix_tmp[i][j] += 1
-        P_matrix_realization = P_matrix_realization + matrix_tmp
+        P_matrix_realization += matrix_tmp
 
     for index, row in enumerate(P_matrix_realization):
         P_matrix_realization[index] = row / sum(row)
@@ -134,7 +135,7 @@ def RegularMarkov():
 
     # Model a regular Markov chain. Quantity implementations - more than 100
 
-    number_of_realization = 100
+    number_of_realization = 1000
     arr_realization = []
     n = 30
 
@@ -147,6 +148,7 @@ def RegularMarkov():
             i = vector.index(np.random.choice(vector, 1, p=vector)[0])
         realization.append(i)
         arr_realization.append(realization)
+    
     
 
     plt.figure(figsize=(15, 5))
